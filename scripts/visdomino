@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+import os
+import argparse
+import visdom
+import imutil
+
+
+def main(dir, port):
+    print('Connecting to Visdom server at localhost:{}'.format(port))
+    viz = visdom.Visdom(port=port)
+
+    print('Searching for images in directory {}'.format(dir))
+    for root, dirs, files in os.walk(dir):
+        files = [f for f in files if f[0] != '.']
+        dirs[:] = [d for d in dirs if d[0] != '.']
+        for f in files:
+            filename = os.path.join(dir, root, f)
+            extension = filename.split('.')[-1].lower()
+            if extension in ['jpg', 'png']:
+                pixels = imutil.decode_jpg(filename, resize_to=None)
+                pixels = pixels.transpose((2,0,1))
+                viz.image(pixels)
+            elif extension in ['mp4']:
+                viz.video(videofile=filename)
+
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Search for images in the given directory and display them all in Visdom')
+    parser.add_argument('--dir', help='Directory containing images')
+    parser.add_argument('--port', help='Port of a running Visdom server')
+    # TODO: add --persist
+
+    args = parser.parse_args()
+    main(args.dir, args.port)

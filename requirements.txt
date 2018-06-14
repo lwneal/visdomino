@@ -1,0 +1,2 @@
+visdom
+git+https://github.com/lwneal/imutil

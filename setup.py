@@ -7,7 +7,7 @@ setup(name='visdomino',
       description='Visdomino sends files to Visdom.',
       author='Larry Neal',
       author_email='nealla@lwneal.com',
-      scripts=['visdomino'],
+      scripts=['scripts/visdomino'],
       install_requires=[
           "visdom",
       ],

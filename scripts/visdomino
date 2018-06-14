@@ -27,8 +27,8 @@ def main(dir, port):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Search for images in the given directory and display them all in Visdom')
-    parser.add_argument('--dir', help='Directory containing images')
-    parser.add_argument('--port', help='Port of a running Visdom server')
+    parser.add_argument('--dir', required=True, help='Directory containing images')
+    parser.add_argument('--port', default=8097, help='Port of a running Visdom server')
     # TODO: add --persist
 
     args = parser.parse_args()
